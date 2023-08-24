@@ -9,11 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <form action="{{ route('register') }}" method="post">
+    <form action="{{ route('registration.store') }}" method="post">
+        @csrf
         <label>Login</label>
-        <input type="text" name="login" placeholder="Enter your name">
+        <input type="text" name="name" placeholder="Enter your name">
         <label>Phone</label>
-        <input type="text" name="phone" placeholder="Enter your phone">
+        <input type="tel" name="phone" placeholder="Enter your phone">
         <button type="submit">Register</button>
     </form>
 </body>
