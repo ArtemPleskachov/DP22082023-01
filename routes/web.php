@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\GameController;
 use App\Http\Controllers\PageAController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +26,10 @@ Route::get('/game-pageA/{link}', [PageAController::class, 'show'])
 	->middleware('auth')
 	->name('pages.pageA');
 
-//Route::get('/game-pageA/{link}', [GameController::class, 'show'])
-//	->middleware('auth')
-//	->name('pages.game');
+Route::get('/game-pageA/{link}/generate', [PageAController::class, 'createNewLink'])
+	->middleware('auth')
+	->name('pages.generate');
+
+Route::get('/game-pageA/{link}/destroy', [PageAController::class, 'destroyLink'])
+	->middleware('auth')
+	->name('pages.destroy');

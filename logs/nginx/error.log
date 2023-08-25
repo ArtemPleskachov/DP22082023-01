@@ -52,3 +52,35 @@
 2023/08/24 18:38:35 [error] 29#29: *1369 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /link/41 HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/"
 2023/08/24 19:16:26 [error] 32#32: *1645 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /game-pageA/64e7ac4c33d0b HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/link/47"
 2023/08/25 07:11:31 [error] 32#32: *1818 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /game-pageA/64e84a34bfca10866bbc7287772c9dc8b6ac72a803af8 HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/link/57"
+2023/08/25 10:56:36 [error] 30#30: *2115 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /link/67 HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/"
+2023/08/25 11:16:37 [error] 32#32: *2172 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /link/71 HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/"
+2023/08/25 11:18:02 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/08/25 11:18:02 [notice] 31#31: gracefully shutting down
+2023/08/25 11:18:02 [notice] 29#29: gracefully shutting down
+2023/08/25 11:18:02 [notice] 31#31: exiting
+2023/08/25 11:18:02 [notice] 30#30: gracefully shutting down
+2023/08/25 11:18:02 [notice] 32#32: gracefully shutting down
+2023/08/25 11:18:02 [notice] 29#29: exiting
+2023/08/25 11:18:02 [notice] 29#29: exit
+2023/08/25 11:18:02 [notice] 31#31: exit
+2023/08/25 11:18:02 [notice] 30#30: exiting
+2023/08/25 11:18:02 [notice] 32#32: exiting
+2023/08/25 11:18:02 [notice] 30#30: exit
+2023/08/25 11:18:02 [notice] 32#32: exit
+2023/08/25 11:18:02 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/08/25 11:18:02 [notice] 1#1: worker process 29 exited with code 0
+2023/08/25 11:18:02 [notice] 1#1: worker process 30 exited with code 0
+2023/08/25 11:18:02 [notice] 1#1: worker process 31 exited with code 0
+2023/08/25 11:18:02 [notice] 1#1: worker process 32 exited with code 0
+2023/08/25 11:18:02 [notice] 1#1: exit
+2023/08/25 11:18:36 [notice] 1#1: using the "epoll" event method
+2023/08/25 11:18:36 [notice] 1#1: nginx/1.23.3
+2023/08/25 11:18:36 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/08/25 11:18:36 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/08/25 11:18:36 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/08/25 11:18:36 [notice] 1#1: start worker processes
+2023/08/25 11:18:36 [notice] 1#1: start worker process 29
+2023/08/25 11:18:36 [notice] 1#1: start worker process 30
+2023/08/25 11:18:36 [notice] 1#1: start worker process 31
+2023/08/25 11:18:36 [notice] 1#1: start worker process 32
+2023/08/25 12:47:42 [error] 30#30: *130 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /game-pageA/64e8a2aa40ae3c1b0676f1bc705122c40eb486624bf06?_token=DW3zHmlzwV1Ky2yFryyH2QNhsJHp8iYICfuJwZK6 HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/game-pageA/64e8a2a4b6c730a99677a33c603901669b672294328cd"

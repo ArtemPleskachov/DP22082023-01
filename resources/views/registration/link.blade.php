@@ -13,6 +13,10 @@
 <div class="lucky">
     <table>
         <tr>
+            <td>Hello</td>
+            <td>{{ $user->name }}</td>
+        </tr>
+        <tr>
             <td>Your lucky link</td>
             <td><a href="{{ route('pages.pageA', ['link' => $user->unique_link]) }}">{{ $user->unique_link }}</a></td>
         </tr>
