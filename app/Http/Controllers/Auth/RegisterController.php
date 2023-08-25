@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -23,30 +24,31 @@ class RegisterController extends Controller
 	
     public function store(Request $request)
 	{
-		$uniqueLink = uniqid();
+		$uniqueHash = md5($request->name . $request->phone . $request->user()->id . now());
+		$uniqueLink = uniqid() . $uniqueHash;
 		
 		$user = User::create([
 			'name' => $request->name,
 			'phone' => $request->phone,
 			'unique_link' => $uniqueLink,
 		]);
-//		dd($request->all());
-		Auth::login($user);
 		
-		return redirect('/link');
+		return redirect()->route('registration.link', ['id' => $user->id]);
+	}
+	
+	public function showLink($id)
+	{
+		$user = User::where('id', $id)->first();
+		$expirationDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)
+			->addDays(7)
+			->format('d M Y');
 		
-//		return redirect()->route('registration.link', ['user' => $user->id]);
+		if (!$user) {
+			return redirect()->route('registration.form')->with('error', 'Invalid link.');
+		}
+		
+		return view('registration.link', ['user' => $user, 'expirationDate' => $expirationDate]);
 	}
 	
 	
-//	public function showLink($link)
-//	{
-//		$user = User::where('unique_link', $link)->first();
-//
-//		if (!$user) {
-//			return redirect()->route('registration.form')->with('error', 'Invalid link.');
-//		}
-//
-//		return view('registration.link', ['user' => $user]);
-//	}
 }

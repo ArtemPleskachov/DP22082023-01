@@ -16,6 +16,32 @@
         <label>Phone</label>
         <input type="tel" name="phone" placeholder="Enter your phone">
         <button type="submit">Register</button>
+
     </form>
+
+    <div class="popup">
+        <div class="popup-content">
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+        </div>
+    </div>
+
+    <script>
+        const popup = document.querySelector('.popup');
+        const popupContent = document.querySelector('.popup-content');
+        if ("{{ session('error') }}") {
+            popup.style.display = 'flex';
+        }
+        popup.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+    </script>
+
+
+
+
 </body>
 </html>

@@ -17,11 +17,38 @@ body {
     background-position: center;
 }
 
+.linkPage {
+    font-family: 'Montserrat', sans-serif;
+    /*display: flex;*/
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    background-image: url(../img/2.png);
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 label {
     text-align: center;
     width: 100%;
     margin-top: 5px;
 }
+
+.lucky {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    width: fit-content;
+    margin: 0 auto;
+    transform: translate(0, -50%);
+    background-color: rgba(175, 167, 169, 0.8);
+    border-radius: 10px;
+}
+
 
 form {
     padding-top: 10px;
@@ -87,4 +114,50 @@ button {
 }
 
 
+table {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    background-color: rgba(175, 167, 169, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
+table td, table th {
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+}
+
+.game-page {
+    font-family: 'Montserrat', sans-serif;
+    /*display: flex;*/
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    background-image: url(../img/3.png);
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
