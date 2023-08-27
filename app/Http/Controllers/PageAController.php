@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Link;
-use App\Models\User;
 use App\Services\GameService;
 use App\Services\LinkService;
-use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PageAController extends Controller

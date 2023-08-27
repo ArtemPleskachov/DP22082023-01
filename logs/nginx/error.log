@@ -87,3 +87,35 @@
 2023/08/25 16:07:28 [error] 30#30: *865 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /game-pageA/64e8d164e1c257057ec8fbad77090b2df11ab13ea2914/generate? HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/game-pageA/64e8d164e1c257057ec8fbad77090b2df11ab13ea2914"
 2023/08/25 16:26:20 [error] 30#30: *979 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /game-pageA/64e8d5f073631760c12388e258d6d6ea50a6cf7b3e258 HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/game-pageA/64e8d5e2eb799ac9794f1a1b3dbb1d2235cddf66329e5"
 2023/08/27 07:58:17 [error] 29#29: *1145 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 172.21.0.1, server: , request: "POST / HTTP/1.1", upstream: "fastcgi://172.21.0.3:9000", host: "localhost", referrer: "http://localhost/"
+2023/08/27 15:13:16 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/08/27 15:13:16 [notice] 32#32: gracefully shutting down
+2023/08/27 15:13:16 [notice] 30#30: gracefully shutting down
+2023/08/27 15:13:16 [notice] 31#31: gracefully shutting down
+2023/08/27 15:13:16 [notice] 29#29: gracefully shutting down
+2023/08/27 15:13:16 [notice] 30#30: exiting
+2023/08/27 15:13:16 [notice] 31#31: exiting
+2023/08/27 15:13:16 [notice] 32#32: exiting
+2023/08/27 15:13:16 [notice] 29#29: exiting
+2023/08/27 15:13:16 [notice] 29#29: exit
+2023/08/27 15:13:16 [notice] 31#31: exit
+2023/08/27 15:13:16 [notice] 30#30: exit
+2023/08/27 15:13:16 [notice] 32#32: exit
+2023/08/27 15:13:16 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/08/27 15:13:16 [notice] 1#1: worker process 29 exited with code 0
+2023/08/27 15:13:16 [notice] 1#1: worker process 30 exited with code 0
+2023/08/27 15:13:16 [notice] 1#1: worker process 31 exited with code 0
+2023/08/27 15:13:16 [notice] 1#1: signal 29 (SIGIO) received
+2023/08/27 15:13:16 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/08/27 15:13:16 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/08/27 15:13:16 [notice] 1#1: worker process 32 exited with code 0
+2023/08/27 15:13:16 [notice] 1#1: exit
+2023/08/27 16:32:15 [notice] 1#1: using the "epoll" event method
+2023/08/27 16:32:15 [notice] 1#1: nginx/1.23.3
+2023/08/27 16:32:15 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/08/27 16:32:15 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/08/27 16:32:15 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/08/27 16:32:15 [notice] 1#1: start worker processes
+2023/08/27 16:32:15 [notice] 1#1: start worker process 30
+2023/08/27 16:32:15 [notice] 1#1: start worker process 31
+2023/08/27 16:32:15 [notice] 1#1: start worker process 32
+2023/08/27 16:32:15 [notice] 1#1: start worker process 33

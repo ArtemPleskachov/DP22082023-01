@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\DataNotFoundException;
+use App\Exceptions\PhoneAlreadyExistsException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Rules\UniquePhone;
 use App\Services\LinkService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,11 +33,16 @@ class RegisterController extends Controller
 			'name' => 'required|string',
 			'phone' => 'required|string|regex:/^(\+?\d{1,2})?\s?\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/',
 		]);
-		
-		$user = User::create([
-			'name' => $request->name,
-			'phone' => $request->phone,
-		]);
+		try {
+			$user = User::create([
+				'name' => $request->name,
+				'phone' => $request->phone,
+			]);
+		} catch (QueryException $e) {
+			if ($e->getCode() === '23000') { // MySQL error code for duplicate entry
+				return redirect()->route('register')->with('error', 'This phone number is already in use.');
+			}
+		}
 		
 		Auth::login($user);
 		$linkService->generateNewLink($user);
