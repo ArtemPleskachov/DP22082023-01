@@ -12,12 +12,12 @@
     <form action="{{ route('registration.store') }}" method="post">
         @csrf
         <label>Login</label>
-        <input type="text" name="name" placeholder="Enter your name" required>
+        <input type="text" name="name" value="{{ old('name') }}" placeholder="Enter your name" autofocus required>
         @if ($errors->has('name'))
             <p class="error-message">{{ $errors->first('name') }}</p>
         @endif
         <label>Phone</label>
-        <input type="tel" name="phone" placeholder="Enter your phone" pattern="^(\+?\d{1,2})?\s?\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$" required>
+        <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="Enter your phone" pattern="^(\+?\d{1,2})?\s?\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$" required>
         @if ($errors->has('phone'))
             <p class="error-message">{{ $errors->first('phone') }}</p>
         @endif

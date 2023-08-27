@@ -38,7 +38,7 @@
             </form>
         </div>
         @if(session('gameStart'))
-        <div class="game">
+        <div class="game" style="background-color: {{ session('result') === 'WIN' ? 'rgba(78, 255, 108, 0.8)' : 'rgba(207, 0, 38, 0.8)' }}">
             <h2>Your game</h2>
             <p>Random number: {{ session('randomNumber') }}</p>
             <p>Result: {{ session('result') }}</p>

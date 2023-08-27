@@ -108,6 +108,7 @@ body {
     text-align: center;
     border-radius: 5px;
     display: flex;
+    padding: 10px 0;
 }
 
 .history table {
