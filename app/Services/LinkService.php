@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class LinkService
 {
+	/**
+	 * @param User $user
+	 * @return bool
+	 * @throws DataNotFoundException
+	 */
 	public function isUserHasUniqueLink(User $user): bool
 	{
 		$userHasLink = $user->links()->where('active', true)->exists();
@@ -19,14 +24,32 @@ class LinkService
 		return true;
 	}
 	
-	public function getUserByLink($link)
+	/**
+	 * @param $link
+	 * @return mixed
+	 * @throws DataNotFoundException
+	 */
+	public function getUserByLink($link): mixed
 	{
-		return Link::where('unique_link', $link)->first()->user;
+		$user = Link::where('unique_link', $link)->first()->user;
+		if (!$user) {
+			throw new DataNotFoundException('User not found');
+		}
+		return $user;
 	}
 	
-	public function getLinkByUser($user)
+	/**
+	 * @param $user
+	 * @return mixed
+	 * @throws DataNotFoundException
+	 */
+	public function getLinkByUser($user): mixed
 	{
-		return $user->links->first()->unique_link;
+		$link = $user->links->first()->unique_link;
+		if (!$link) {
+			throw new DataNotFoundException('Link not found');
+		}
+		return $link;
 		
 	}
 	
@@ -43,7 +66,8 @@ class LinkService
 		return $uniqueLink;
 	}
 	
-	public function destroyLink(User $user)
+	
+	public function destroyLink(User $user): mixed
 	{
 		return $user->links->first()->delete();
 	}

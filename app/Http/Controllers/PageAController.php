@@ -20,21 +20,17 @@ class PageAController extends Controller
 	 */
 	public function show($link, LinkService $linkService): Factory|View|Application|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
 	{
-		$user = $linkService->getUserByLink($link);
-		
-		if (!$user) {
-			return redirect()->route('register')->with('error', 'Not found link.');
+		try {
+			$user = $linkService->getUserByLink($link);
+		} catch (DataNotFoundException $e) {
+			return redirect()->route('register')->with('error', $e->getMessage());
 		}
 		
 		try {
 			$linkService->isUserHasUniqueLink($user);
 		} catch (DataNotFoundException $e) {
 			return redirect()->route('register')->with('error', $e->getMessage());
-			
 		}
-//		if(!$linkService->isUserHasUniqueLink($user)) {
-//			return redirect()->route('registration.form')->with('error', 'Sorry, your link has expired.');
-//		}
 		
 		if (!$linkService->isActiveLink($user)) {
 			return redirect()->route('register')->with('error', 'Sorry, your link has expired.');
@@ -45,7 +41,11 @@ class PageAController extends Controller
 	
 	public function createNewLink($link, LinkService $linkService): \Illuminate\Http\RedirectResponse
 	{
-		$user = $linkService->getUserByLink($link);
+		try {
+			$user = $linkService->getUserByLink($link);
+		} catch (DataNotFoundException $e) {
+			return redirect()->route('register')->with('error', $e->getMessage());
+		}
 		
 		if (!$user) {
 			return redirect()->route('register')->with('error', 'User not found.');
@@ -59,7 +59,11 @@ class PageAController extends Controller
 	
 	public function destroyLink($link, LinkService $linkService): \Illuminate\Http\RedirectResponse
 	{
-		$user = $linkService->getUserByLink($link);
+		try {
+			$user = $linkService->getUserByLink($link);
+		} catch (DataNotFoundException $e) {
+			return redirect()->route('register')->with('error', $e->getMessage());
+		}
 		
 		if (!$user) {
 			return redirect()->route('register')->with('error', 'Invalid link.');
@@ -72,10 +76,21 @@ class PageAController extends Controller
 	}
 	
 	
-	public function playGame(GameService $gameService, LinkService $linkService)
+	/**
+	 * @param GameService $gameService
+	 * @param LinkService $linkService
+	 * @return RedirectResponse
+	 */
+	public function playGame(GameService $gameService, LinkService $linkService): RedirectResponse
 	{
 		$user = Auth::user();
-		$link = $linkService->getLinkByUser($user);
+		
+		try {
+			$link = $linkService->getLinkByUser($user);
+		} catch (DataNotFoundException $e) {
+			return redirect()->route('register')->with('error', $e->getMessage());
+		}
+		
 		$gameResult = $gameService->playGame($user);
 		
 		session([
@@ -90,22 +105,26 @@ class PageAController extends Controller
 	}
 	
 	
-	public function history(GameService $gameService, LinkService $linkService)
+	/**
+	 * @param GameService $gameService
+	 * @param LinkService $linkService
+	 * @return RedirectResponse
+	 */
+	public function history(GameService $gameService, LinkService $linkService): RedirectResponse
 	{
 		$user = Auth::user();
-		$link = $linkService->getLinkByUser($user);
+		try {
+			$link = $linkService->getLinkByUser($user);
+		} catch (DataNotFoundException $e) {
+			return redirect()->route('register')->with('error', $e->getMessage());
+		}
 		$gameHistory = $gameService->history($user);
 		
 		session([
 			'gameHistory' => $gameHistory,
-		
 		]);
 		
 		return redirect()->route('pages.pageA', [
 			'link' => $link])->with('history', 'history');
 	}
-	
-	
-	
-	
 }
