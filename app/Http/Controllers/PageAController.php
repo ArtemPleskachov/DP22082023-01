@@ -2,39 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Link;
 use App\Models\User;
+use App\Services\GameService;
 use App\Services\LinkService;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PageAController extends Controller
 {
-	public function show($link, LinkService $linkService)
+	/**
+	 * @param $link
+	 * @param LinkService $linkService
+	 * @return Factory|View|Application|RedirectResponse|\Illuminate\Contracts\Foundation\Application
+	 */
+	public function show($link, LinkService $linkService): Factory|View|Application|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
 	{
-		$user = User::where('unique_link', $link)->first();
+		$user = $linkService->getUserByLink($link);
 		
 		if (!$user) {
-			return redirect()->route('register')->with('error', 'Invalid link.');
-		}
-		if ($linkService->checkLinkExpiration($user)) {
-			$user->delete();
-			return redirect()->route('register')->with('error', 'Sorry, your link has expired.');
+			return redirect()->route('register')->with('error', 'Not found link.');
 		}
 		
-//		session(['user' => $user]);
-//		$user = session('user');
+		if(!$linkService->isUserHasUniqueLink($user)) {
+			return redirect()->route('registration.form')->with('error', 'Sorry, your link has expired.');
+		}
+		
+		if (!$linkService->isActiveLink($user)) {
+			return redirect()->route('register')->with('error', 'Sorry, your link has expired.');
+		}
 		
 		return view('pages.pageA', ['user' => $user]);
 	}
 	
-	
-	
 	public function createNewLink($link, LinkService $linkService): \Illuminate\Http\RedirectResponse
 	{
-		$user = User::where('unique_link', $link)->first();
+		$user = $linkService->getUserByLink($link);
 		
 		if (!$user) {
 			return redirect()->route('register')->with('error', 'User not found.');
@@ -46,17 +54,52 @@ class PageAController extends Controller
 			->with('successMessage', 'Your link has been regenerated.');
 	}
 	
-	public function destroyLink($link): \Illuminate\Http\RedirectResponse
+	public function destroyLink($link, LinkService $linkService): \Illuminate\Http\RedirectResponse
 	{
-		$user = User::where('unique_link', $link)->first();
+		$user = $linkService->getUserByLink($link);
+		
 		if (!$user) {
 			return redirect()->route('register')->with('error', 'Invalid link.');
 		}
 		
-		$user->update(['unique_link' => '4']);
+		$linkService->destroyLink($user);
 		
-		return redirect()->route('pages.pageA', ['link' => $user->unique_link])
-			->with('successDestroy', 'Your link deleted.');
+		return redirect()->route('register')
+			->with('error', 'Your link has been deleted, please create a new one!');
+	}
+	
+	
+	public function playGame(GameService $gameService, LinkService $linkService)
+	{
+		$user = Auth::user();
+		$link = $linkService->getLinkByUser($user);
+		$gameResult = $gameService->playGame($user);
+		
+		session([
+			'randomNumber' => $gameResult['randomNumber'],
+			'result' => $gameResult['result'],
+			'winAmount' => $gameResult['winAmount'],
+		]);
+
+
+		return redirect()->route('pages.pageA', [
+			'link' => $link])->with('gameStart', 'Game start');
+	}
+	
+	
+	public function history(GameService $gameService, LinkService $linkService)
+	{
+		$user = Auth::user();
+		$link = $linkService->getLinkByUser($user);
+		$gameHistory = $gameService->history($user);
+		
+		session([
+			'gameHistory' => $gameHistory,
+		
+		]);
+		
+		return redirect()->route('pages.pageA', [
+			'link' => $link])->with('history', 'history');
 	}
 	
 	

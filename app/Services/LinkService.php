@@ -2,40 +2,64 @@
 
 namespace App\Services;
 
+use App\Models\Link;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LinkService
 {
+	public function isUserHasUniqueLink(User $user): bool
+	{
+		return $user->links()->where('active', true)->exists();
+	}
+	
+	public function getUserByLink($link)
+	{
+		return Link::where('unique_link', $link)->first()->user;
+	}
+	
+	public function getLinkByUser($user)
+	{
+		return $user->links->first()->unique_link;
+		
+	}
+	
 	public function generateNewLink(User $user): string
 	{
 		$uniqueHash = md5($user->name . $user->phone . $user->id . now());
-		return uniqid() . $uniqueHash;
-	}
-	
-	public function updateLink(User $user): void
-	{
-		$uniqueHash = md5($user->name . $user->phone . $user->id . now());
 		$uniqueLink = uniqid() . $uniqueHash;
-		$user->update(['unique_link' => $uniqueLink]);
 		
+		Link::create([
+			'user_id' => $user->id,
+			'unique_link' => $uniqueLink,
+		]);
+		
+		return $uniqueLink;
 	}
 	
-	
-	public function destroyLink(User $user): void
+	public function destroyLink(User $user)
 	{
-		$user->update(['unique_link' => null]);
+		return $user->links->first()->delete();
 	}
 	
-	public function checkLinkExpiration(User $user): bool
+	public function isActiveLink(User $user): bool
 	{
+		$link = $user->links->first();
+		
+		if (!$link || !$link->active) {
+			return false;
+		}
 		$currentDate = Carbon::now();
-		$expirationDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)->addDays(7);
+		$expirationDate = Carbon::createFromFormat('Y-m-d H:i:s', $link->created_at)->addDays(7);
 		
-		return $expirationDate->lt($currentDate);
+		if ($expirationDate->lt($currentDate)) {
+			$link->update(['active' => false]);
+			return false;
+		}
+		
+		return true;
 	}
-	
 	
 	
 	

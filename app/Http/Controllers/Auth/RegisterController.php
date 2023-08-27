@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,22 +23,23 @@ class RegisterController extends Controller
 		return view('registration.form');
 	}
 	
-	
-    public function store(Request $request)
+    public function store(Request $request, LinkService $linkService): RedirectResponse
 	{
-		$uniqueHash = md5($request->name . $request->phone . $request->user()->id . now());
-		$uniqueLink = uniqid() . $uniqueHash;
-		
 		$user = User::create([
 			'name' => $request->name,
 			'phone' => $request->phone,
-			'unique_link' => $uniqueLink,
 		]);
 		
+		Auth::login($user);
+		$linkService->generateNewLink($user);
 		return redirect()->route('registration.link', ['id' => $user->id]);
 	}
 	
-	public function showLink($id)
+	/**
+	 * @param $id
+	 * @return Factory|View|\Illuminate\Foundation\Application|RedirectResponse|Application
+	 */
+	public function showLink($id): Factory|View|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|Application
 	{
 		$user = User::where('id', $id)->first();
 		$expirationDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)

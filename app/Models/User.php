@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,8 +21,23 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
 		'phone',
-		'unique_link',
     ];
+	
+	/**
+	 * @return HasMany
+	 */
+	public function links(): HasMany
+	{
+		return $this->hasMany(Link::class);
+	}
+	
+	/**
+	 * @return HasMany
+	 */
+	public function results(): HasMany
+	{
+		return $this->hasMany(Result::class);
+	}
 
     /**
      * The attributes that should be hidden for serialization.

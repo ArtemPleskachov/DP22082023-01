@@ -18,7 +18,7 @@
         </tr>
         <tr>
             <td>Your lucky link</td>
-            <td><a href="{{ route('pages.pageA', ['link' => $user->unique_link]) }}">{{ $user->unique_link }}</a></td>
+            <td><a href="{{ route('pages.pageA', ['link' => $user->links->first()->unique_link]) }}">{{ $user->links->first()->unique_link }}</a></td>
         </tr>
         <tr>
             <td>The link expires in</td>
