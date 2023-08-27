@@ -25,6 +25,11 @@ class RegisterController extends Controller
 	
     public function store(Request $request, LinkService $linkService): RedirectResponse
 	{
+		$request->validate([
+			'name' => 'required|string',
+			'phone' => 'required|string|regex:/^(\+?\d{1,2})?\s?\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/',
+		]);
+		
 		$user = User::create([
 			'name' => $request->name,
 			'phone' => $request->phone,

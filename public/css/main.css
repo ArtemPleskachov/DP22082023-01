@@ -132,7 +132,6 @@ table th {
 
 .game-page {
     font-family: 'Montserrat', sans-serif;
-    /*display: flex;*/
     align-items: center;
     justify-content: center;
     background-color: #ffffff;
@@ -160,4 +159,11 @@ table th {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.error-message {
+    color: crimson;
+    background-color: rgba(192, 120, 120, 0.5);
+    text-align: center;
 }
