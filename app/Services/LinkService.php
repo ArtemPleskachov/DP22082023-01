@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\DataNotFoundException;
 use App\Models\Link;
 use App\Models\User;
 use Carbon\Carbon;
@@ -11,7 +12,11 @@ class LinkService
 {
 	public function isUserHasUniqueLink(User $user): bool
 	{
-		return $user->links()->where('active', true)->exists();
+		$userHasLink = $user->links()->where('active', true)->exists();
+		if (!$userHasLink) {
+			throw new DataNotFoundException('This user has no link');
+		}
+		return true;
 	}
 	
 	public function getUserByLink($link)

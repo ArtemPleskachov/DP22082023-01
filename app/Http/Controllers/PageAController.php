@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\DataNotFoundException;
 use App\Services\GameService;
 use App\Services\LinkService;
 use Illuminate\Contracts\View\Factory;
@@ -25,9 +26,15 @@ class PageAController extends Controller
 			return redirect()->route('register')->with('error', 'Not found link.');
 		}
 		
-		if(!$linkService->isUserHasUniqueLink($user)) {
-			return redirect()->route('registration.form')->with('error', 'Sorry, your link has expired.');
+		try {
+			$linkService->isUserHasUniqueLink($user);
+		} catch (DataNotFoundException $e) {
+			return redirect()->route('register')->with('error', $e->getMessage());
+			
 		}
+//		if(!$linkService->isUserHasUniqueLink($user)) {
+//			return redirect()->route('registration.form')->with('error', 'Sorry, your link has expired.');
+//		}
 		
 		if (!$linkService->isActiveLink($user)) {
 			return redirect()->route('register')->with('error', 'Sorry, your link has expired.');
