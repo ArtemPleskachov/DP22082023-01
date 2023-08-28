@@ -28,7 +28,6 @@ Access the PHP container (Use {APP_NAME} from `.env` file):
 Install Laravel dependencies:
 
 ```console
-cd DP22082023
 composer install
 ```
 
